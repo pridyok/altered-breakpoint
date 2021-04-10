@@ -5,11 +5,11 @@ export default {
   devtool: 'eval-source-map',
   mode: 'development',
   entry: {
-    index: path.resolve(__dirname, './src/index.ts'),
+    index: path.resolve(__dirname, '../src/index.ts'),
   },
   target: 'web',
   output: {
-    path: path.resolve(__dirname, './src'),
+    path: path.resolve(__dirname, '../src'),
     publicPath: '/',
     filename: '[name].js',
     chunkFilename: '[chunkhash].js',

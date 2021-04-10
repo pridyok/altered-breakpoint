@@ -6,11 +6,11 @@ export default {
   devtool: 'source-map',
   mode: 'production',
   entry: {
-    index: path.resolve(__dirname, './src/index.ts'),
+    index: path.resolve(__dirname, '../src/index.ts'),
   },
   target: 'web',
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
     filename: '[name].js',
     chunkFilename: '[chunkhash].js'
