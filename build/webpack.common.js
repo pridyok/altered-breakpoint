@@ -7,7 +7,6 @@ export default {
   },
   output: {
     publicPath: '/',
-    filename: '[name].js',
     chunkFilename: '[chunkhash].js',
   },
   resolve: {
