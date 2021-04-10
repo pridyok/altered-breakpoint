@@ -1,15 +1,11 @@
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+import path from 'path'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 export default {
-  devtool: 'eval-source-map',
-  mode: 'development',
   entry: {
     index: path.resolve(__dirname, '../src/index.ts'),
   },
-  target: 'web',
   output: {
-    path: path.resolve(__dirname, '../src'),
     publicPath: '/',
     filename: '[name].js',
     chunkFilename: '[chunkhash].js',
@@ -25,7 +21,7 @@ export default {
     }),
   ],
   module: {
-    rules : [
+    rules: [
       {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
@@ -41,10 +37,6 @@ export default {
         use: ['source-map-loader'],
         enforce: 'pre',
       },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      }
-    ]
-  }
+    ],
+  },
 }
