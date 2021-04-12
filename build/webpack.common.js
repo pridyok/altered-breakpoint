@@ -1,5 +1,4 @@
 import path from 'path'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 export default {
   entry: {
@@ -13,12 +12,7 @@ export default {
     extensions: ['.ts', '.tsx', '.js'],
     modules: ['node_modules'],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-      inject: true,
-    }),
-  ],
+  plugins: [],
   module: {
     rules: [
       {
@@ -37,5 +31,8 @@ export default {
         enforce: 'pre',
       },
     ],
+  },
+  stats: {
+    preset: 'errors-warnings',
   },
 }

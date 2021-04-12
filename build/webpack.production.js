@@ -20,4 +20,7 @@ export default {
       },
     ],
   },
+  experiments: {
+    outputModule: true,
+  },
 }
