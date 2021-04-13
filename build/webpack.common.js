@@ -2,7 +2,7 @@ import path from 'path'
 
 export default {
   entry: {
-    index: path.resolve(__dirname, '../src/index.ts'),
+    index: [path.resolve(__dirname, '../src/index.ts')],
   },
   output: {
     publicPath: '/',

@@ -4,6 +4,7 @@ import { createVariants } from 'parallel-webpack'
 import commonConfig from './webpack.common'
 import developmentConfig from './webpack.development'
 import productionConfig from './webpack.production'
+import styleConfig from './webpack.style'
 
 const mode = process.env.NODE_ENV || 'development'
 
@@ -22,7 +23,7 @@ const getConfig = mode => {
       }
 
       const createConfig = options => {
-        const config = merge(commonConfig, productionConfig, { mode })
+        let config = merge(commonConfig, productionConfig, { mode })
         const filename = `[name]${suffixMap[options.target]}.js`
         const library = {
           name: options.target === 'module' ? undefined : 'alteredJS',
@@ -38,6 +39,8 @@ const getConfig = mode => {
               inject: true,
             }),
           )
+
+          config = merge(config, styleConfig(mode))
         }
 
         return config
@@ -45,7 +48,7 @@ const getConfig = mode => {
 
       return createVariants(variants, createConfig)
     case 'development':
-      return merge(commonConfig, developmentConfig, { mode })
+      return merge(commonConfig, developmentConfig, styleConfig(mode), { mode })
     default:
       throw new Error(`Trying to use an unknown mode, ${mode}`)
   }

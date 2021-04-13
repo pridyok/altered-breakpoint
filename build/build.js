@@ -12,9 +12,9 @@ console.log(
 
 run(configPath, { stats: true }, (err, statsJSON) => {
   if (err) {
-    console.log(chalk.red(err.stack || err))
+    console.error(err.stack || err)
     if (err.details) {
-      console.log(chalk.red(err.details))
+      console.error(err.details)
     }
     return
   }
