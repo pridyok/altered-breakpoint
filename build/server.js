@@ -1,32 +1,17 @@
-import express from 'express'
-import devMiddleware from 'webpack-dev-middleware'
-import hotMiddleware from 'webpack-hot-middleware'
-import path from 'path'
-import open from 'open'
-import webpack from 'webpack'
-import config from './webpack.config'
+import Webpack from 'webpack'
+import WebpackDevServer from 'webpack-dev-server'
+import configData from './webpack.config'
+import chalk from 'chalk'
 
-const port = 8001
-const app = express()
-const compiler = webpack(config)
+const config = Array.isArray(configData) ? configData[0] : configData
+const compiler = Webpack(config)
+const devServerOptions = Object.assign({}, config.devServer, { open: true })
+const server = new WebpackDevServer(compiler, devServerOptions)
 
-app.use(
-  devMiddleware(compiler, {
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    stats: 'minimal',
-    publicPath: config.output.publicPath,
-  }),
-)
-app.use(hotMiddleware(compiler))
-
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, '../src/index.html'))
-})
-
-app.listen(port, function (err) {
-  if (err) {
-    console.log(err)
-  } else {
-    open('http://localhost:' + port)
-  }
+server.listen(devServerOptions.port, '127.0.0.1', () => {
+  console.log(
+    chalk.blue(
+      `Starting server at http://localhost:${devServerOptions.port}\n`,
+    ),
+  )
 })

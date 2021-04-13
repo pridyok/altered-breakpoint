@@ -46,4 +46,11 @@ export default {
   stats: {
     preset: 'errors-warnings',
   },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    noInfo: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+  },
 }

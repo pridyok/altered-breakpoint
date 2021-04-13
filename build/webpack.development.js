@@ -4,9 +4,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 export default {
   devtool: 'eval-source-map',
-  entry: {
-    index: ['webpack-hot-middleware/client'],
-  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
@@ -19,5 +16,9 @@ export default {
   },
   optimization: {
     runtimeChunk: 'single',
+  },
+  devServer: {
+    hot: true,
+    port: 8000,
   },
 }
