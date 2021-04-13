@@ -7,9 +7,6 @@ export default {
   entry: {
     index: ['webpack-hot-middleware/client'],
   },
-  output: {
-    path: path.resolve(__dirname, '../src'),
-  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
