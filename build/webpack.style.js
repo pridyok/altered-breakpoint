@@ -2,11 +2,12 @@ import path from 'path'
 import autoprefixer from 'autoprefixer'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
+import projectConfig from './config'
 
 export default mode => {
   return {
     entry: {
-      index: [path.resolve(__dirname, '../src/index.sass')],
+      [projectConfig.filename]: [path.resolve(__dirname, '../src/index.sass')],
     },
     plugins: [
       new MiniCssExtractPlugin({

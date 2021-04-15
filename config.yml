@@ -1,0 +1,6 @@
+name: alteredJS
+filename: alteredJS
+exports:
+  - commonjs2
+  - amd
+  - module

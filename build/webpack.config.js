@@ -1,6 +1,7 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { merge } from 'webpack-merge'
 import { createVariants } from 'parallel-webpack'
+import projectConfig from './config'
 import commonConfig from './webpack.common'
 import developmentConfig from './webpack.development'
 import productionConfig from './webpack.production'
@@ -12,7 +13,7 @@ const getConfig = mode => {
   switch (mode) {
     case 'production':
       const variants = {
-        target: ['var', 'commonjs2', 'amd', 'module'],
+        target: ['var', ...projectConfig.exports],
       }
 
       const suffixMap = {
@@ -26,7 +27,7 @@ const getConfig = mode => {
         let config = merge(commonConfig, productionConfig, { mode })
         const filename = `[name]${suffixMap[options.target]}.js`
         const library = {
-          name: options.target === 'module' ? undefined : 'alteredJS',
+          name: options.target === 'module' ? undefined : projectConfig.name,
           type: options.target,
         }
 

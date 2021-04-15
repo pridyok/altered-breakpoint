@@ -1,9 +1,10 @@
 import path from 'path'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+import projectConfig from './config'
 
 export default {
   entry: {
-    index: [path.resolve(__dirname, '../src/index.ts')],
+    [projectConfig.filename]: [path.resolve(__dirname, `../src/index.ts`)],
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
