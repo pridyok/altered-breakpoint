@@ -1,12 +1,12 @@
 import path from 'path'
 import autoprefixer from 'autoprefixer'
-import cssnano from 'cssnano'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
 
 export default mode => {
   return {
     entry: {
-      index: [path.resolve(__dirname, '../src/index.scss')],
+      index: [path.resolve(__dirname, '../src/index.sass')],
     },
     plugins: [
       new MiniCssExtractPlugin({
@@ -17,7 +17,7 @@ export default mode => {
     module: {
       rules: [
         {
-          test: /\.[s]css$/,
+          test: /\.[s](a|c)ss$/,
           use: [
             mode === 'production'
               ? MiniCssExtractPlugin.loader
@@ -26,13 +26,23 @@ export default mode => {
             {
               loader: 'postcss-loader',
               options: {
-                // TODO: Replace cssnano with css-minimizer-webpack-plugin
-                postcssOptions: { plugins: [autoprefixer(), cssnano()] },
+                postcssOptions: { plugins: [autoprefixer()] },
               },
             },
             { loader: 'sass-loader' },
           ],
         },
+      ],
+    },
+    optimization: {
+      minimizer: [
+        `...`,
+        new CssMinimizerPlugin({
+          minify: CssMinimizerPlugin.cleanCssMinify,
+          minimizerOptions: {
+            level: 2,
+          },
+        }),
       ],
     },
   }
