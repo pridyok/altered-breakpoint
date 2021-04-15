@@ -24,7 +24,7 @@ const getConfig = mode => {
       }
 
       const createConfig = options => {
-        let config = merge(commonConfig, productionConfig, { mode })
+        let config = merge(commonConfig(mode), productionConfig, { mode })
         const filename = `[name]${suffixMap[options.target]}.js`
         const library = {
           name: options.target === 'module' ? undefined : projectConfig.name,
@@ -49,7 +49,9 @@ const getConfig = mode => {
 
       return createVariants(variants, createConfig)
     case 'development':
-      return merge(commonConfig, developmentConfig, styleConfig(mode), { mode })
+      return merge(commonConfig(mode), developmentConfig, styleConfig(mode), {
+        mode,
+      })
     default:
       throw new Error(`Trying to use an unknown mode, ${mode}`)
   }

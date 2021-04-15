@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
 export default {
   devtool: 'eval-source-map',
@@ -7,6 +8,11 @@ export default {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       inject: true,
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      eslint: {
+        files: './src/**/*.{ts,tsx,js,jsx}',
+      },
     }),
     new webpack.HotModuleReplacementPlugin(),
   ],
