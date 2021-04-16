@@ -25,7 +25,10 @@ export default mode => {
             { loader: 'babel-loader' },
             {
               loader: 'ts-loader',
-              options: { transpileOnly: mode === 'development' },
+              options: {
+                transpileOnly: mode === 'development',
+                onlyCompileBundledFiles: true,
+              },
             },
           ],
         },
