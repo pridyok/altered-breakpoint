@@ -27,7 +27,7 @@
     "clean-dist": "rimraf ./dist && mkdir dist",
     "pretest": "tsc test/*.ts --noEmit",
     "test": "jest",
-    "prebuild": "npm-run-all clean-dist lint",
+    "prebuild": "run-p clean-dist lint",
     "build": "cross-env NODE_ENV=production babel-node build/build.js",
     "postbuild": "cross-env NODE_ENV=production babel-node build/server.js"
   },
