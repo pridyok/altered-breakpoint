@@ -1,14 +1,16 @@
 import Webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
-import configData from './webpack.config'
+import config from './webpack.config.mjs'
 import chalk from 'chalk'
 
-const config = Array.isArray(configData) ? configData[0] : configData
-const compiler = Webpack(config)
-const devServerOptions = Object.assign({}, config.devServer, { open: true })
+const compilerConfig = Array.isArray(config) ? config[0] : config
+const compiler = Webpack(compilerConfig)
+const devServerOptions = Object.assign({}, compilerConfig.devServer, {
+  open: true,
+})
 const server = new WebpackDevServer(compiler, devServerOptions)
 
-server.listen(devServerOptions.port, '127.0.0.1', () => {
+server.listen(devServerOptions.port, 'localhost', () => {
   console.log(
     chalk.blue(
       `Starting server at http://localhost:${devServerOptions.port}\n`,

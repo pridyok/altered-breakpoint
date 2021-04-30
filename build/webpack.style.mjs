@@ -1,13 +1,16 @@
 import path from 'path'
+import { fileURLToPath } from 'url'
 import autoprefixer from 'autoprefixer'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
-import projectConfig from './config'
+import projectConfig from './config.mjs'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default mode => {
   return {
     entry: {
-      [projectConfig.filename]: [path.resolve(__dirname, '../src/index.sass')],
+      [projectConfig.filename]: [path.resolve(__dirname, '../src/demo.sass')],
     },
     plugins: [
       new MiniCssExtractPlugin({

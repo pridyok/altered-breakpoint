@@ -2,25 +2,20 @@
   "name": "altered-js",
   "version": "1.0.0",
   "description": "Javascript development environment",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "style": "dist/index.css",
-  "sass": "src/index.sass",
+  "type": "module",
+  "main": "./dist/index.cjs.js",
+  "exports": {
+    "import": "./dist/index.esm.js",
+    "require": "./dist/index.cjs.js"
+  },
+  "types": "./dist/index.d.ts",
+  "style": "./dist/index.css",
   "files": [
     "/dist"
   ],
-  "jest": {
-    "verbose": true,
-    "roots": [
-      "test/"
-    ],
-    "transform": {
-      "\\.[jt]sx?$": "babel-jest"
-    }
-  },
-  "repository": "github:pridyok/altered-js",
+  "repository": "github:pridyok/altered-breakpoint",
   "scripts": {
-    "start": "cross-env NODE_ENV=development babel-node build/server.js",
+    "start": "cross-env NODE_ENV=development node build/server.js",
     "lint": "eslint .",
     "lint:watch": "npm run lint -- --watch",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
@@ -28,14 +23,17 @@
     "pretest": "tsc test/*.ts --noEmit",
     "test": "jest",
     "prebuild": "run-p clean-dist lint",
-    "build": "cross-env NODE_ENV=production babel-node build/build.js",
-    "postbuild": "cross-env NODE_ENV=production babel-node build/server.js"
+    "build": "cross-env NODE_ENV=production node build/build.js",
+    "postbuild": "cross-env NODE_ENV=production node build/server.js"
   },
   "keywords": [],
   "author": "Aaron Pridy",
   "license": "ISC",
   "dependencies": {
-    "core-js": "^3.10.1"
+    "breakpoint-slicer": "^3.0.0-beta.1",
+    "core-js": "^3.10.1",
+    "debounce": "^1.2.1",
+    "sass-mq": "^5.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
@@ -44,9 +42,12 @@
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-typescript": "^7.13.0",
     "@babel/register": "^7.13.14",
+    "@types/debounce": "^1.2.0",
     "@types/eslint": "^7.2.10",
     "@types/jest": "^26.0.22",
+    "@types/jsdom": "^16.2.10",
     "@types/node": "^14.14.41",
+    "@types/sass": "^1.16.0",
     "@types/webpack": "^5.28.0",
     "@types/webpack-env": "^1.16.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
@@ -68,6 +69,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-standard": "^5.0.0",
+    "esm": "^3.2.25",
     "fibers": "^5.0.0",
     "fork-ts-checker-webpack-plugin": "^6.2.1",
     "html-loader": "^2.1.2",
@@ -77,8 +79,10 @@
     "mini-css-extract-plugin": "^1.4.1",
     "npm-run-all": "^4.1.5",
     "parallel-webpack": "^2.6.0",
+    "pluralize": "^1.2.1",
     "postcss-loader": "^5.2.0",
     "prettier": "^2.2.1",
+    "pretty-error": "^2.1.2",
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
     "source-map-loader": "^2.0.1",
@@ -89,7 +93,7 @@
     "utf-8-validate": "^5.0.4",
     "webpack": "^5.33.2",
     "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^3.1.7",
+    "webpack-dev-server": "^4.0.0-beta.2",
     "webpack-merge": "^5.7.3"
   }
 }

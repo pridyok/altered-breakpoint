@@ -1,9 +1,12 @@
 import yaml from 'js-yaml'
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 import chalk from 'chalk'
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 let config = {}
+
 try {
   const configPath = path.resolve(__dirname, '../config.yml')
   config = yaml.load(fs.readFileSync(configPath, 'utf8'))
