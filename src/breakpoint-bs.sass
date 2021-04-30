@@ -1,0 +1,27 @@
+@use 'sass:meta'
+@use 'sass:list'
+@use 'sass:map'
+@use 'sass:string'
+
+@use 'breakpoint-slicer' as bp
+
+@function strip-unit($number)
+  @return $number / ($number * 0 + 1)
+
+@mixin generateBreakpoints($breakpoints: bp.$slices)
+  $bpKeys: ()
+
+  @at-root
+    html
+      @each $key, $bp in $breakpoints
+        $bpKeys: list.append($bpKeys, $key)
+
+        @if strip-unit($bp) == 0
+          --breakpoint: #{meta.inspect(string.quote($key))}
+
+      --breakpoint-keys: #{$bpKeys}
+
+      @each $key, $bp in $breakpoints
+        @if strip-unit($bp) != 0
+          @include bp.from($key)
+            --breakpoint: #{meta.inspect(string.quote($key))}

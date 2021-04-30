@@ -1,10 +1,9 @@
 @use 'sass:math'
-
-@keyframes pulse
-  0%
-    transform: scale(1)
-  100%
-    transform: scale(1.125)
+// @use 'breakpoint-slicer' as bp with ($slices: (base: 0px, xs: 384px, s: 672px, m: 960px, l: 1200px, xl: 1760px))
+// @use './breakpoint-bs' as breakpoint
+// @use 'sass-mq/mq' as * with ($mq-breakpoints: (xs: 24em, s: 42em, m: 60em, l: 75em, xl: 110em))
+// @use './breakpoint-smq' as breakpoint
+@use './breakpoint'
 
 @keyframes fade
   0%
@@ -69,6 +68,7 @@ body
   font-size: 3rem
   font-weight: 300
   margin: 0 0 1rem
+  text-align: center
   text-shadow: rebeccapurple 0 0 0.375rem
 
 .summary
@@ -78,3 +78,9 @@ body
   text-align: center
   text-shadow: rebeccapurple 0 0 0.25rem
   margin: 0
+
+@include breakpoint.generateBreakpoints()
+
+.current-bp
+  &::after
+    content: var(--breakpoint)

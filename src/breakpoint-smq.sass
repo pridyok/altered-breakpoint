@@ -1,0 +1,21 @@
+@use 'sass:meta'
+@use 'sass:list'
+@use 'sass:map'
+@use 'sass:string'
+
+@use 'sass-mq/mq' as smq
+
+=generateBreakpoints($breakpoints: smq.$mq-breakpoints)
+  $bpKeys: (base)
+
+  @at-root
+    html
+      @each $key, $mq in $breakpoints
+        $bpKeys: list.append($bpKeys, $key)
+
+      --breakpoint-keys: #{$bpKeys}
+      --breakpoint: 'base'
+
+      @each $key, $mq in $breakpoints
+        +smq.mq($key)
+          --breakpoint: #{meta.inspect(string.quote($key))}
