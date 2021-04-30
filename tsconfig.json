@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "jsx": "preserve",
-    "target": "esnext",
+    "target": "es2020",
     "module": "esnext",
     "moduleResolution": "node",
     "outDir": "dist",
@@ -19,5 +19,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
+    "strictFunctionTypes": false,
   }
 }
