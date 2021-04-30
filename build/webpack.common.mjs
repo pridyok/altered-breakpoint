@@ -41,6 +41,9 @@ export default (mode, options = {}) => {
     },
     plugins: [
       new ForkTsCheckerWebpackPlugin({
+        typescript: {
+          configOverwrite: { exclude: ['**/*.spec.ts'] },
+        },
         eslint: {
           files: './src/**/*.{ts,tsx,js,jsx}',
         },
