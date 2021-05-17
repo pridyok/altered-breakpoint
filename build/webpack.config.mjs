@@ -19,7 +19,7 @@ const getConfig = mode => {
       const createConfig = options => {
         let config = commonConfig(mode, options)
 
-        if (options.target === 'var') {
+        if (options.target === 'module') {
           config = merge(styleConfig(mode), serverConfig(mode), config)
         }
 

@@ -8,8 +8,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default (mode, options = {}) => {
   const exportType = (options && options.target) || 'var'
+  const isModule = exportType === 'module'
   const isProduction = mode === 'production'
-  const isInjected = exportType === 'var'
+  const isInjected =
+    !isProduction || exportType === (projectConfig.injectedType || 'module')
   const suffixMap = {
     var: '',
     commonjs2: '.cjs',
@@ -29,10 +31,11 @@ export default (mode, options = {}) => {
       publicPath: '/',
       chunkFilename: '[chunkhash].js',
       filename: `[name]${suffixMap[exportType]}.js`,
+      module: isModule,
       library: {
-        export: 'default',
+        export: isModule ? undefined : options.export || 'default',
         type: exportType,
-        name: exportType === 'module' ? undefined : projectConfig.name,
+        name: isModule ? undefined : projectConfig.name,
       },
     },
     resolve: {
@@ -40,19 +43,23 @@ export default (mode, options = {}) => {
       modules: ['node_modules'],
     },
     plugins: [
-      new ForkTsCheckerWebpackPlugin({
-        typescript: {
-          configOverwrite: { exclude: ['**/*.spec.ts'] },
-        },
-        eslint: {
-          files: './src/**/*.{ts,tsx,js,jsx}',
-        },
-      }),
+      ...(!isProduction
+        ? [
+            new ForkTsCheckerWebpackPlugin({
+              typescript: {
+                configOverwrite: { exclude: ['cypress/*', '**/*.spec.ts'] },
+              },
+              eslint: {
+                files: './src/**/*.{ts,tsx,js,jsx}',
+              },
+            }),
+          ]
+        : []),
       ...(isInjected
         ? [
             new HtmlWebpackPlugin({
               template: './src/index.html',
-              inject: true,
+              inject: false,
             }),
           ]
         : []),
@@ -67,7 +74,7 @@ export default (mode, options = {}) => {
             {
               loader: 'ts-loader',
               options: {
-                transpileOnly: true,
+                transpileOnly: !isProduction,
                 onlyCompileBundledFiles: true,
               },
             },
@@ -84,10 +91,10 @@ export default (mode, options = {}) => {
       preset: 'errors-warnings',
     },
     experiments: {
-      outputModule: !isInjected,
+      outputModule: true,
     },
     optimization: {
-      runtimeChunk: isInjected ? 'single' : false,
+      runtimeChunk: !isProduction ? 'single' : false,
     },
     watch: !isProduction,
     watchOptions: {

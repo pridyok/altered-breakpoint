@@ -3,10 +3,12 @@ import WebpackDevServer from 'webpack-dev-server'
 import config from './webpack.config.mjs'
 import chalk from 'chalk'
 
-const compilerConfig = Array.isArray(config) ? config[0] : config
+const compilerConfig = Array.isArray(config)
+  ? config.find(entry => entry.devServer)
+  : config
 const compiler = Webpack(compilerConfig)
 const devServerOptions = Object.assign({}, compilerConfig.devServer, {
-  open: true,
+  open: compilerConfig.mode === 'development',
 })
 const server = new WebpackDevServer(compiler, devServerOptions)
 

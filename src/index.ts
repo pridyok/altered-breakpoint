@@ -1,19 +1,23 @@
 import { debounce } from 'debounce'
 
+// TODO: Fix event emitting twice if instantiated twice
 export class Breakpoint {
   private static instance: Breakpoint
   private rootStyles: CSSStyleDeclaration
   private data: { breakpoint: string }
   private breakpoints: Record<string, number>
   private eventDelay: number
+  private eventTarget: Window|Element
 
-  constructor({ breakpoints, delay = 0 }: { breakpoints?: Array<string>|null, delay?: number } = {}) {
+  constructor({ breakpoints, source, event = { delay: 0, target: window } }: { breakpoints?: Array<string>|null, source?: Element, event?: { delay: number, target: Window|Element } } = {}) {
     if (Breakpoint.instance) return Breakpoint.instance
 
-    this.rootStyles = window.getComputedStyle(document.documentElement)
+    source ??= document.documentElement
+    this.rootStyles = window.getComputedStyle(source)
     this.data = { breakpoint: this.current() }
     this.breakpoints = {}
-    this.eventDelay = delay
+    this.eventDelay = event.delay || 0
+    this.eventTarget = event.target // TODO: Better defaults
 
     const breakpointKeyString = this.rootStyles.getPropertyValue('--breakpoint-keys')
 
@@ -23,12 +27,12 @@ export class Breakpoint {
     this.bindEvents()
 
     Breakpoint.instance = this
-    Object.freeze(Breakpoint.instance)
+    // Object.freeze(Breakpoint.instance)
   }
 
   bindEvents(): void {
-    window.addEventListener('load', this.update.bind(this))
-    window.addEventListener('resize', (this.eventDelay ? debounce(this.update, this.eventDelay) : this.update).bind(this))
+    this.eventTarget.addEventListener('load', this.update.bind(this))
+    this.eventTarget.addEventListener('resize', (this.eventDelay ? debounce(this.update, this.eventDelay) : this.update).bind(this))
   }
 
   weight(value = this.data.breakpoint): number {
@@ -60,6 +64,7 @@ export class Breakpoint {
   }
 
   emitEvent(newBreakpoint: string): void {
+    console.log('emitting bp!')
     const breakpointChange = new CustomEvent('breakpoint', {
       detail: {
         bp: {
@@ -69,7 +74,7 @@ export class Breakpoint {
       }
     })
 
-    window.dispatchEvent(breakpointChange)
+    this.eventTarget.dispatchEvent(breakpointChange)
   }
 
   current(): string {
@@ -77,6 +82,7 @@ export class Breakpoint {
   }
 
   update(): void {
+    console.log('updating bp!')
     const breakpoint = this.current()
 
     if (this.data.breakpoint !== breakpoint) {

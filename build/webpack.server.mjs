@@ -18,7 +18,7 @@ export default mode => {
       },
       compress: isProduction,
       hot: !isProduction,
-      port: isProduction ? 8001 : 8000,
+      port: isProduction ? 8080 : 8000,
     },
   }
 }
