@@ -1,0 +1,8 @@
+name: Breakpoint
+filename: index
+export: default
+injectedType: module
+exportTypes:
+  - commonjs2
+  - amd
+  - module

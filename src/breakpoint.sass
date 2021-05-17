@@ -1,0 +1,43 @@
+@use 'sass:meta'
+@use 'sass:list'
+@use 'sass:map'
+@use 'sass:string'
+
+$breakpoints: (xs: 24em, s: 42em, m: 60em, l: 75em, xl: 110em, xxl: 128em) !default
+
+@function strip-unit($number)
+  @return $number / ($number * 0 + 1)
+
+=generateBreakpoint($key, $mq)
+  @if strip-unit($mq) != 0
+    @if meta.type-of($mq) == number
+      $mq: 'screen and (min-width: ' + $mq + ')'
+    @else if meta.type-of($mq) == list
+      $mq: 'screen and (min-width: ' + list.nth($mq, 1) + ') and (max-width: ' + list.nth($mq(2)) + ')'
+    @else if meta.type-of($mq) == map
+      $mqString: 'screen'
+
+      @if map.has-key($mq, 'min')
+        $mqString: $mqString + ' and (min-width: ' + map.get($mq, 'min') + ')'
+      @if map.has-key($mq, 'max')
+        $mqString: $mqString + ' and (max-width: ' + map.get($mq, 'max') + ')'
+
+      $mq: $mqString
+
+    @media #{$mq}
+      --breakpoint: #{meta.inspect(string.quote($key))}
+
+=generateBreakpoints($breakpoints: $breakpoints)
+  $bpKeys: (base)
+
+  @at-root
+    html
+      @each $key, $mq in $breakpoints
+        @if $key != base
+          $bpKeys: list.append($bpKeys, $key)
+
+      --breakpoint-keys: #{$bpKeys}
+      --breakpoint: 'base'
+
+      @each $key, $mq in $breakpoints
+        +generateBreakpoint($key, $mq)

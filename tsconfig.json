@@ -2,9 +2,10 @@
   "compileOnSave": false,
   "compilerOptions": {
     "jsx": "preserve",
-    "target": "esnext",
+    "target": "es2020",
     "module": "esnext",
     "moduleResolution": "node",
+    "outDir": "dist",
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "dist",
@@ -16,6 +17,9 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
+    "strictFunctionTypes": false,
   }
 }
