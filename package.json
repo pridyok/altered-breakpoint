@@ -1,6 +1,6 @@
 {
   "name": "altered-breakpoint",
-  "version": "1.0.0",
+  "version": "0.8.0",
   "description": "Javascript development environment",
   "type": "module",
   "main": "./dist/index.cjs.js",
@@ -34,7 +34,7 @@
   },
   "keywords": [],
   "author": "Aaron Pridy",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "core-js": "^3.11.1",
     "debounce": "^1.2.1"
