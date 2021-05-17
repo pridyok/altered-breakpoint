@@ -3,24 +3,20 @@ env:
   browser: true
   es2021: true
   node: true
-  jest/globals: true
 extends:
   - 'eslint:recommended'
   - 'plugin:@typescript-eslint/eslint-recommended'
   - 'plugin:@typescript-eslint/recommended'
   - 'prettier'
+  - 'plugin:cypress/recommended'
 parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: 12
   sourceType: 'module'
 plugins:
   - '@typescript-eslint'
-  - 'jest'
 rules:
   '@typescript-eslint/no-var-requires': 0
   'no-unused-vars': 'off' # duplicate of @typescript-eslint/no-unused-vars
-  'jest/no-disabled-tests': 'warn'
-  'jest/no-focused-tests': 'error'
-  'jest/no-identical-title': 'error'
-  'jest/prefer-to-have-length': 'warn'
-  'jest/valid-expect': 'error'
+  'no-debugger': 'off'
+  'cypress/no-unnecessary-waiting': 'off'

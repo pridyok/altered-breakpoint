@@ -1,0 +1,25 @@
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "targets": "> 0.25%, not dead",
+        "bugfixes": true,
+        "corejs": "3.10",
+        "modules": false,
+        "useBuiltIns": "usage"
+      }
+    ],
+    [
+      "@babel/typescript",
+      {
+        "allExtensions": true,
+        "isTSX": true
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/proposal-class-properties"
+  ]
+}
